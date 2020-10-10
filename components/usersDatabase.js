@@ -44,6 +44,17 @@ module.exports = {
         }
 
         return false;
+    },
+
+    // Function to check if an email with the same email address is already existing in the database
+    existsEmail(email) {
+        for (let i = 0; i < users.length; i++) {
+            if (users[i].email === email) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
 }

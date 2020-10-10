@@ -158,6 +158,19 @@ app.post('/users/create',
             })
         }
 
+        //Check if username already exists
+        if (usersDatabase.existsUsername(req.body.username) === true) {
+            return res.status(409).json({
+                "message": "Username already exists."
+            });
+        }
+
+        if (usersDatabase.existsEmail(req.body.email) === true) {
+            return res.status(409).json({
+                "message": "The given email is already assigned to an other account."
+            });
+        }
+
         const hashedPassword = bcrypt.hashSync(req.body.password, 6);
         console.log(hashedPassword);
         // call function to add user to database
