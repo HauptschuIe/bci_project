@@ -6,14 +6,12 @@ let users = [{
         userId: "1",
         username: 'tester',
         password: '$2y$06$PhZ74dT8/5g6B8SgssFq6ey4ojLxmP6pos2DcevMUGw25Vc9jGEou', // testerpassword
-        validApiKey: null,
         email: 'oof@gmail.com'
     },
     {
         userId: "2",
         username: "johndoe",
         password: '$2y$06$eQav1OaIyWSUnlvPSaFXRe5gWRqXd.s9vac1SV1GafxAr8hdmsgCy', // johndoepassword
-        validApiKey: null,
         email: 'oof@gmail.com'
     },
 ];

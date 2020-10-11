@@ -86,8 +86,8 @@ options.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
 options.secretOrKey = jwtSecretKey.secret;
 
 passport.use(new JwtStrategy(options, function (jwt_payload, done) {
-    console.log("Processing JWT payload for token content:");
-    console.log(jwt_payload);
+    //console.log("Processing JWT payload for token content:");
+    //console.log(jwt_payload);
 
 
     /* Here you could do some processing based on the JWT payload.
@@ -107,15 +107,16 @@ POST /login
 User logs in with username and password
  */
 
-app.get(
+app.post(
     '/login',
     passport.authenticate('basic', {
         session: false
     }),
     (req, res) => {
         const body = {
-            id: req.user.id,
-            username: req.user.username
+            userId: req.user.userId,
+            username: req.user.username,
+            password: req.user.password
         };
 
         const payload = {
@@ -134,6 +135,7 @@ app.get(
         return res.json({
             token
         });
+
     })
 
 
@@ -236,8 +238,9 @@ app.post('/items/create', passport.authenticate('jwt', {
     }
 
     // call function to add item to database 
-    itemsDatabase.addItem(req.user.userId, req.body.title, req.body.description, req.body.category, req.body.locationCountry, req.body.locationCity, req.files, req.body.askingPrice, req.body.deliveryType, request.body.sellerName, request.body.sellerEmail);
-    res.sendStatus(201).json({
+    itemsDatabase.addItem(req.user.userId, req.body.title, req.body.description, req.body.category, req.body.locationCountry, req.body.locationCity, req.files, req.body.askingPrice, req.body.deliveryType, req.body.sellerName, req.body.sellerEmail);
+
+    return res.status(201).json({
         "message": "Item successfully created."
     })
 
@@ -341,7 +344,7 @@ app.delete('/items/:itemId', passport.authenticate('jwt', {
     }
 
     //check if user is authorized to delete the item
-    if (copyItemBody.userId !== req.user.userId) {
+    if (copyItemBody.userId != req.user.userId) {
         return res.status(401).json({
             "message": "You are not authorized to delete this item."
         });
@@ -372,7 +375,7 @@ app.get('/items/search/:searchOption/:searchValue', (req, res) => {
         // call function to get all requested items from the database
         resultItems = itemsDatabase.getItemsByCountry(req.params.searchValue);
 
-        if (resultItems) {
+        if (Object.keys(resultItems).length > 0) {
 
             return res.status(200).json(resultItems);
 
@@ -387,7 +390,7 @@ app.get('/items/search/:searchOption/:searchValue', (req, res) => {
         // call function to get all requested items from the database
         resultItems = itemsDatabase.getItemsByCity(req.params.searchValue);
 
-        if (resultItems) {
+        if (Object.keys(resultItems).length > 0) {
 
             return res.status(200).json(resultItems);
 
@@ -415,7 +418,7 @@ app.get('/items/search/:searchOption/:searchValue', (req, res) => {
         // call function to get all requested items from the database
         resultItems = itemsDatabase.getItemsByDate(date);
 
-        if (resultItems) {
+        if (Object.keys(resultItems).length > 0) {
 
             return res.status(200).json(resultItems);
 
@@ -431,7 +434,7 @@ app.get('/items/search/:searchOption/:searchValue', (req, res) => {
         // call function to get all requested items from the database
         resultItems = itemsDatabase.getItemsByCategory(req.params.searchValue);
 
-        if (resultItems) {
+        if (Object.keys(resultItems).length > 0) {
 
             return res.status(200).json(resultItems);
 
@@ -443,7 +446,7 @@ app.get('/items/search/:searchOption/:searchValue', (req, res) => {
 
     } else {
         return res.status(404).json({
-            "message": "There is no such search option. Choose between the following: category, date, locationCountry, locationCity"
+            "message": "Invalid search option. Choose between the following: category, date, locationCountry, locationCity"
         });
     }
 

@@ -6,7 +6,7 @@ const moment = require('moment');
 let items = [{
         itemId: '2',
         dateOfPosting: "17/06/2020",
-        userId: "2",
+        userId: "1",
         title: "Test item",
         description: "This is an example item",
         category: "animals",
@@ -18,9 +18,9 @@ let items = [{
         sellerEmail: "jonas@gmail.com"
     },
     {
-        itemId: '2',
+        itemId: '3',
         dateOfPosting: "17/06/2020",
-        userId: "2",
+        userId: "1",
         title: "Testitem 1",
         description: "This is an example item",
         category: "electronic",
@@ -36,8 +36,8 @@ let items = [{
 
 module.exports = {
     // Function to add a new item to the database
-    addItem: (userId, title, description, category, locationCountry, locationCity, images, askingPrice, deliveryType, sellerName, sellerEmail) => {
-        items.push({
+    addItem(userId, title, description, category, locationCountry, locationCity, images, askingPrice, deliveryType, sellerName, sellerEmail) {
+        return items.push({
             id: uuidv4(), // ⇨ '1b9d6bcd-bbfd-4b2d-9b5d-ab8dfbbd4bed'
             dateOfPosting: moment().format('L'),
             userId,
@@ -145,5 +145,12 @@ module.exports = {
 
         return resultItems;
     },
+    deleteItem(item) {
+        for (let i = 0; i < items.length; i++) {
+            if (items[i].itemId === item.itemId) {
+                items.splice(i, 1);
+            }
+        }
+    }
 
 }
