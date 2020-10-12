@@ -1,7 +1,8 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
-const port = 3000;
+const PORT = process.env.PORT || 3000;
+const HOST = '0.0.0.0';
 const bcrypt = require('bcryptjs');
 const errorHandler = require('./components/errorHandler');
 
@@ -467,9 +468,8 @@ app.use('*', errorHandler.clientError);
 let apiInstance = null;
 
 exports.start = () => {
-    apiInstance = app.listen(port, () => {
-        console.log(`Example app listening at http://localhost:${port}`)
-    })
+    apiInstance = app.listen(PORT, HOST)
+    console.log(`Example app listening at http://${HOST}:${PORT}`)
 }
 
 exports.stop = () => {
