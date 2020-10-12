@@ -9,6 +9,8 @@ API is running on a virtual machine at https://www.bw-cloud.org/en/ in a Docker 
 
 **Access the API with this address: http://193.196.54.219:3000/**
 
+---
+
 #### Getting started
 
 Clone the Github repository
