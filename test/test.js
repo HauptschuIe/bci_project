@@ -298,13 +298,24 @@ describe('Item operations', function () {
                     locationCountry: "Finland2",
                     locationCity: "Oulu2",
                     askingPrice: 77.72,
-                    deliveryType: "pickup2",
+                    deliveryType: "shipping",
                     sellerName: "Jonas2",
                     sellerEmail: "jonas@gmail.com2"
                 })
                 .then(response => {
                     expect(response.status).to.equal(200);
-                    //expect(response.body).to.be.instanceof(Object);
+                    expect(response.body).to.be.a('object');
+                    expect(response.body).to.have.a.property('itemId');
+                    expect(response.body).to.have.a.property('title');
+                    expect(response.body).to.have.a.property('description');
+                    expect(response.body).to.have.a.property('category');
+                    expect(response.body).to.have.a.property('askingPrice');
+                    expect(response.body).to.have.a.property('locationCity');
+                    expect(response.body).to.have.a.property('locationCountry');
+                    expect(response.body).to.have.a.property('deliveryType');
+                    expect(response.body.deliveryType).to.equal('shipping');
+                    expect(response.body).to.have.a.property('sellerName');
+                    expect(response.body).to.have.a.property('sellerEmail');
                 })
                 .catch(error => {
                     expect.fail(error)
