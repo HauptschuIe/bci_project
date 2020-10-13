@@ -9,7 +9,7 @@ Students Email: k0jowa00@students.oamk.fi
 
 API is running on a virtual machine at https://www.bw-cloud.org/en/ in a Docker container.
 
-**Access the API with this address: http://193.196.54.219:3000/**
+**Access the API in Postman with this address: http://193.196.54.219:3000/**
 
 ---
 
